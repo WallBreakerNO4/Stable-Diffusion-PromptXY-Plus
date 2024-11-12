@@ -24,7 +24,7 @@ def fetch_and_return_images(api_url, json_payload):
                 image = Image.open(BytesIO(image_data))
 
                 # 显示图像
-                print(f"Displaying image {idx + 1}")
+                # print(f"Displaying image {idx + 1}")
                 images.append(image)
         else:
             raise Exception("No images returned from API")
