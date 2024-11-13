@@ -16,7 +16,7 @@ def generate_short_hash(input_string):
 os.makedirs('images', exist_ok=True)
 
 # Read CSV files
-with (open('prompts/artist_strings_test.csv', 'r', encoding='utf-8-sig') as artist_strings_csv,
+with (open('prompts/artist_strings.csv', 'r', encoding='utf-8-sig') as artist_strings_csv,
       open('prompts/prompt_string.csv', 'r', encoding='utf-8-sig') as prompt_string_csv):
     artist_string_reader = csv.reader(artist_strings_csv)
     prompt_string_reader = csv.reader(prompt_string_csv)
