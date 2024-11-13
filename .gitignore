@@ -1,0 +1,5 @@
+/.venv
+/images
+/output_images.xlsx
+/image_paths.csv
+__pycache__
