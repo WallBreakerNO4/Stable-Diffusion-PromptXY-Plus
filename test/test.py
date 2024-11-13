@@ -1,5 +1,5 @@
-from fetch_and_return_images import fetch_and_return_images
-from construct_json_payload import *
+from lib.fetch_and_return_images import fetch_and_return_images
+from lib.construct_json_payload import *
 
 if __name__ == "__main__":
     # 示例API调用地址和JSON内容，你需要根据实际情况进行调整

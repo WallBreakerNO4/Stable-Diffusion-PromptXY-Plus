@@ -3,9 +3,9 @@ import os
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.drawing.image import Image as ExcelImage
-from convert_braces import convert_braces
-from construct_json_payload import construct_json_payload_with_artist
-from fetch_and_return_images import fetch_and_return_images
+from lib.convert_braces import convert_braces
+from lib.construct_json_payload import construct_json_payload_with_artist
+from lib.fetch_and_return_images import fetch_and_return_images
 import hashlib
 
 
@@ -15,11 +15,11 @@ def generate_short_hash(input_string):
 
 
 # Ensure the images directory exists
-os.makedirs('images', exist_ok=True)
+os.makedirs('../images', exist_ok=True)
 
 # Read CSV files
-with (open('prompts/artist_strings.csv', 'r', encoding='utf-8-sig') as artist_strings_csv,
-      open('prompts/prompt_string.csv', 'r', encoding='utf-8-sig') as prompt_string_csv):
+with (open('../prompts/artist_strings.csv', 'r', encoding='utf-8-sig') as artist_strings_csv,
+      open('../prompts/prompt_string.csv', 'r', encoding='utf-8-sig') as prompt_string_csv):
     artist_string_reader = csv.reader(artist_strings_csv)
     prompt_string_reader = csv.reader(prompt_string_csv)
     artist_strings = []

@@ -3,9 +3,9 @@ import os
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.drawing.image import Image as ExcelImage
-from convert_braces import convert_braces
-from construct_json_payload import construct_json_payload_with_artist
-from fetch_and_return_images import fetch_and_return_images
+from lib.convert_braces import convert_braces
+from lib.construct_json_payload import construct_json_payload_with_artist
+from lib.fetch_and_return_images import fetch_and_return_images
 import hashlib
 
 

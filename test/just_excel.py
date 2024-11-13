@@ -4,7 +4,7 @@ from openpyxl import Workbook
 from openpyxl.drawing.image import Image as ExcelImage
 
 # Ensure the images directory exists
-images_dir = 'images'
+images_dir = '../images'
 if not os.path.exists(images_dir):
     raise FileNotFoundError(f"The directory '{images_dir}' does not exist.")
 
