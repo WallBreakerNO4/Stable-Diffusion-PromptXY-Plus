@@ -1,4 +1,4 @@
-from convert_braces import convert_braces
+from lib.convert_braces import convert_braces
 
 
 def construct_json_payload_with_artist(artist_string, prompt_string):
