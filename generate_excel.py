@@ -11,8 +11,9 @@ wb = Workbook()
 ws = wb.active
 
 # Set the row height and column width to fit the images
-row_height = (1536 // 1.3) + 10  # Increase the row height more significantly
-col_width = (1024 // 7.5) + 10  # Column width remains the same
+row_height = (1536 // 3.25) + 10  # Increase the row height more significantly
+col_width = (1024 // 18.75) + 10  # Column width remains the same
+image_scale = 0.4
 
 # Write the DataFrame to the Excel worksheet
 for j, artist_string in enumerate(df.columns, start=2):
@@ -26,6 +27,9 @@ for i, prompt_string in enumerate(df.index, start=2):
         if pd.notna(image_paths):
             for image_path in ast.literal_eval(image_paths):  # Use ast.literal_eval to convert string back to list
                 img = ExcelImage(image_path)
+                # Resize the image to 25% of its original size
+                img.width = img.width * image_scale
+                img.height = img.height * image_scale
                 img.anchor = ws.cell(row=i, column=j).coordinate
                 ws.add_image(img)
 
