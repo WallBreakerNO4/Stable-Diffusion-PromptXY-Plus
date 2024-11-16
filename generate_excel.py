@@ -1,8 +1,8 @@
+import ast
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.drawing.image import Image as ExcelImage
 from openpyxl.styles import Alignment
-import ast
 
 # Load the DataFrame from the transposed CSV file
 df = pd.read_csv('image_paths.csv', index_col=0)
@@ -21,13 +21,15 @@ for j, artist_string in enumerate(df.columns, start=2):
     cell = ws.cell(row=1, column=j, value=artist_string)  # Write the artist strings to the first row
     cell.alignment = Alignment(wrapText=True)  # Enable text wrapping
     ws.column_dimensions[chr(64 + j)].width = col_width
-for i, prompt_string in enumerate(df.index, start=2):
+
+ws.column_dimensions['A'].width = col_width // 2  # Set the width of the first column to twice the original width
+
+for i, (prompt_string, row) in enumerate(df.iterrows(), start=2):
     cell = ws.cell(row=i, column=1, value=prompt_string)  # Write the prompt strings to the first column
     cell.alignment = Alignment(wrapText=True)  # Enable text wrapping
     ws.row_dimensions[i].height = row_height
-    ws.column_dimensions['A'].width = col_width // 2  # Set the width of the first column to twice the original width
     for j, artist_string in enumerate(df.columns, start=2):
-        image_paths = df.at[prompt_string, artist_string]
+        image_paths = row[artist_string]
         if pd.notna(image_paths):
             for image_path in ast.literal_eval(image_paths):  # Use ast.literal_eval to convert string back to list
                 img = ExcelImage(image_path)
