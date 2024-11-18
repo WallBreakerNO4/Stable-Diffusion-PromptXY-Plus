@@ -15,14 +15,18 @@ def generate_short_hash(input_string):
 # Ensure the images directory exists
 os.makedirs('images', exist_ok=True)
 
+artist_csv_file = 'prompts/artist_strings_unique.csv'
+prompt_csv_file = 'prompts/prompt_string.csv'
+
+
 # Read CSV files
-with (open('prompts/artist_strings.csv', 'r', encoding='utf-8-sig') as artist_strings_csv,
-      open('prompts/prompt_string.csv', 'r', encoding='utf-8-sig') as prompt_string_csv):
+with (open(artist_csv_file, 'r', encoding='utf-8-sig') as artist_strings_csv,
+      open(prompt_csv_file, 'r', encoding='utf-8-sig') as prompt_string_csv):
     artist_string_reader = csv.reader(artist_strings_csv)
     prompt_string_reader = csv.reader(prompt_string_csv)
     artist_strings = []
     prompt_strings = []
-    api_url = "http://192.168.20.100:7860/sdapi/v1/txt2img"
+    api_url = "https://u518045-a316-f1fcb2d2.westc.gpuhub.com:8443/sdapi/v1/txt2img"
 
     for row in artist_string_reader:
         artist_strings.append(convert_braces(row[0]))
