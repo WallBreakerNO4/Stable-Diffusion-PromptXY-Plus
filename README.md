@@ -29,8 +29,7 @@ Stable-Diffusion-PromptXY-Plus 是一个用于生成 excel 格式的的 XY 对�
 
 ## 使用方法
 
-1. 修改 `lib/construct_json_payload.py` 中的默认参数
-2. 修改 `generate_images.py` 中的 `artist_csv_file` 、 `prompt_csv_file` 和 `api_url` 参数
+1. 修改 `config.py` 中的配置
 3. 运行 `generate_images.py` 生成图片
 4. 运行 `generate_excel.py` 生成 excel 文件
 
