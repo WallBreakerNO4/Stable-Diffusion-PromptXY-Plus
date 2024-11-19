@@ -1,10 +1,13 @@
 from lib.convert_braces import convert_braces
+from lib.deduplication_prompt import clean_prompt
 from config import *
 
 
 def construct_json_payload_with_artist(artist_string, prompt_string):
     payload = {
-        "prompt": IMAGE_QUALITY_PROMPT + convert_braces(artist_string) + prompt_string,
+        "prompt": clean_prompt(
+            IMAGE_QUALITY_PROMPT + convert_braces(artist_string) + prompt_string
+        ),
         "negative_prompt": IMAGE_NEGATIVE_PROMPT,
         "seed": IMAGE_SEED,
         "sampler_name": IMAGE_SAMPLER_NAME,
