@@ -1,10 +1,10 @@
 # API URL
-# STABLE_DIFFUSION_URL = "https://u518045-a316-f1fcb2d2.westc.gpuhub.com:8443/sdapi/v1/txt2img"
-STABLE_DIFFUSION_URL = "http://192.168.20.100:7860"
+STABLE_DIFFUSION_URL = "https://u518045-a316-f1fcb2d2.westc.gpuhub.com:8443"
+# STABLE_DIFFUSION_URL = "http://192.168.20.100:7860"
 
 # CSV 文件路径
-# ARTIST_CSV_FILE = "prompts/artist_strings_unique.csv"
-ARTIST_CSV_FILE = "prompts/artist_test.csv"
+ARTIST_CSV_FILE = "prompts/artist_strings_unique.csv"
+# ARTIST_CSV_FILE = "prompts/artist_test.csv"
 PROMPT_CSV_FILE = "prompts/prompt_string.csv"
 
 # 生成图片所用参数
