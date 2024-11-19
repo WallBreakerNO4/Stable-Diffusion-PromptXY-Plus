@@ -38,6 +38,9 @@ with (
 
     # Create a DataFrame to store the results
     df = pd.DataFrame(index=prompt_strings, columns=artist_strings)
+    
+    total_images = len(artist_strings) * len(prompt_strings)
+    generated_images = 0
 
     for artist_string in artist_strings:
         for prompt_string in prompt_strings:
@@ -55,6 +58,10 @@ with (
                 print(
                     f'Saved image {idx + 1} for artist:"{artist_string}" and prompt:"{prompt_string}"'
                 )
+                # 显示进度
+                generated_images += 1
+                percentage = (generated_images / total_images) * 100
+                print(f"已生成 {generated_images}/{total_images} 张图像 ({percentage:.2f}%)")
             # Store the image paths in the DataFrame
             df.at[prompt_string, artist_string] = str(
                 image_paths
