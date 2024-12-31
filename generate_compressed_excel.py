@@ -8,20 +8,16 @@ import ast
 from tqdm import tqdm
 
 
-def resize_image(image_path, max_size=(200, 200)):
-    """调整图片大小，保持宽高比"""
+def process_image(image_path):
+    """处理图片，保持原始尺寸和质量"""
     with Image.open(image_path) as img:
         # 转换为RGB模式（如果需要）
         if img.mode in ('RGBA', 'P'):
             img = img.convert('RGB')
-        # 计算新的尺寸
-        ratio = min(max_size[0] / img.size[0], max_size[1] / img.size[1])
-        new_size = tuple(int(dim * ratio) for dim in img.size)
-        # 调整大小
-        resized_img = img.resize(new_size, Image.Resampling.LANCZOS)
-        # 保存为临时PNG文件（Excel不支持直接插入webp）
+        
+        # 保存为临时PNG文件，使用最高质量设置
         temp_path = image_path.replace('.webp', '_temp.png')
-        resized_img.save(temp_path, 'PNG')
+        img.save(temp_path, 'PNG', quality=100, optimize=True)
         return temp_path
 
 
@@ -42,10 +38,9 @@ wb = Workbook()
 ws = wb.active
 ws.title = "压缩图片展示"
 
-# 设置列宽
-ws.column_dimensions['A'].width = 30  # 艺术家列
-ws.column_dimensions['B'].width = 30  # 提示词列
-ws.column_dimensions['C'].width = 30  # 图片列
+# 设置列宽和行高（适应原始图片尺寸）
+ws.column_dimensions['A'].width = 35  # 艺术家列
+ws.column_dimensions['B'].width = 35  # 提示词列
 
 # 添加标题行
 ws['A1'] = "艺术家"
@@ -81,16 +76,19 @@ for prompt in df.columns:
         for idx, img_path in enumerate(image_paths):
             if os.path.exists(img_path):
                 try:
-                    # 调整图片大小并获取临时文件路径
-                    temp_path = resize_image(img_path)
+                    # 处理图片并获取临时文件路径
+                    temp_path = process_image(img_path)
                     temp_files.append(temp_path)
 
                     # 在Excel中插入图片
                     img = XLImage(temp_path)
                     cell = ws.cell(row=current_row, column=3 + idx)
-                    # 设置图片位置
-                    ws.column_dimensions[get_column_letter(3 + idx)].width = 30
-                    ws.row_dimensions[current_row].height = 150
+                    
+                    # 设置更大的列宽和行高以适应原始图片
+                    ws.column_dimensions[get_column_letter(3 + idx)].width = 60
+                    ws.row_dimensions[current_row].height = 400
+                    
+                    # 添加图片并设置偏移以确保居中显示
                     ws.add_image(img, cell.coordinate)
                 except Exception as e:
                     print(f"处理图片时出错 {img_path}: {e}")
@@ -106,4 +104,4 @@ wb.save("compressed_images_report.xlsx")
 # 清理临时文件
 cleanup_temp_files(temp_files)
 
-print("Excel报告已生成: compressed_images_report.xlsx") 
+print("原始尺寸Excel报告已生成: compressed_images_report.xlsx")
