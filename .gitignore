@@ -6,3 +6,6 @@ __pycache__
 /images_multi-artists
 /venv
 config.py
+/compressed_images
+/compressed_image_paths.csv
+/compressed_images_report.xlsx
