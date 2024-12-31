@@ -1,6 +1,8 @@
 # API URL
-STABLE_DIFFUSION_URL = "https://u518045-a316-f1fcb2d2.westc.gpuhub.com:8443"
+# STABLE_DIFFUSION_URL = "https://u518045-a316-f1fcb2d2.westc.gpuhub.com:8443"
 # STABLE_DIFFUSION_URL = "http://192.168.20.100:7860"
+STABLE_DIFFUSION_URL = "http://127.0.0.1:6006"
+# STABLE_DIFFUSION_URL = "http://100.71.15.9:7860"
 
 # CSV 文件路径
 ARTIST_CSV_FILE = "prompts/artist_strings_unique.csv"
