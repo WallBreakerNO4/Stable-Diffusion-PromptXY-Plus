@@ -1,5 +1,6 @@
 import ast
 import pandas as pd
+from tqdm import tqdm
 from openpyxl import Workbook
 from openpyxl.drawing.image import Image as ExcelImage
 from openpyxl.styles import Alignment
@@ -24,6 +25,10 @@ for j, artist_string in enumerate(df.columns, start=2):
 
 ws.column_dimensions['A'].width = col_width // 2  # Set the width of the first column to twice the original width
 
+# 创建进度条
+total_cells = len(df.index) * len(df.columns)
+progress_bar = tqdm(total=total_cells, desc="生成Excel进度")
+
 for i, (prompt_string, row) in enumerate(df.iterrows(), start=2):
     cell = ws.cell(row=i, column=1, value=prompt_string)  # Write the prompt strings to the first column
     cell.alignment = Alignment(wrapText=True)  # Enable text wrapping
@@ -37,6 +42,10 @@ for i, (prompt_string, row) in enumerate(df.iterrows(), start=2):
                 img.height = img.height * image_scale
                 img.anchor = ws.cell(row=i, column=j).coordinate
                 ws.add_image(img)
+        progress_bar.update(1)
+
+# 关闭进度条
+progress_bar.close()
 
 # Save the workbook
 wb.save('output_images.xlsx')

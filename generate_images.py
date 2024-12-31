@@ -1,6 +1,7 @@
 import csv
 import os
 import pandas as pd
+from tqdm import tqdm
 from lib.convert_braces import convert_braces
 from lib.construct_json_payload import construct_json_payload_with_artist
 from lib.fetch_and_return_images import fetch_and_return_images
@@ -42,6 +43,9 @@ with (
     total_images = len(artist_strings) * len(prompt_strings)
     generated_images = 0
 
+    # 创建总进度条
+    progress_bar = tqdm(total=total_images, desc="生成图片进度")
+
     for artist_string in artist_strings:
         for prompt_string in prompt_strings:
             json_payload = construct_json_payload_with_artist(
@@ -58,14 +62,16 @@ with (
                 print(
                     f'Saved image {idx + 1} for artist:"{artist_string}" and prompt:"{prompt_string}"'
                 )
-                # 显示进度
+                # 更新进度条
                 generated_images += 1
-                percentage = (generated_images / total_images) * 100
-                print(f"已生成 {generated_images}/{total_images} 张图像 ({percentage:.2f}%)")
+                progress_bar.update(1)
             # Store the image paths in the DataFrame
             df.at[prompt_string, artist_string] = str(
                 image_paths
             )  # Convert list to string
+
+    # 关闭进度条
+    progress_bar.close()
 
 # Transpose the DataFrame and save it to a CSV file
 df.T.to_csv("image_paths.csv")
